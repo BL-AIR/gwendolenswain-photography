@@ -1,6 +1,6 @@
 /* Gwendolen Swain Photography — site styles
    Tokens come straight from the brand system (assets/css/tokens). */
-@import url('tokens/fonts.css');
+/* Fonts are linked directly in each page's <head> (faster than a nested @import). */
 @import url('tokens/colors.css');
 @import url('tokens/typography.css');
 @import url('tokens/spacing.css');
