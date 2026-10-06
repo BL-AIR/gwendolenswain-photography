@@ -1,0 +1,27 @@
+# Tells Bing (and other IndexNow search engines) about the site's pages
+# after every push to main, so changes are picked up quickly.
+# The key file ea3c6a8f7d833cca3e3a3c3d47f810bf.txt at the site root proves we own the domain.
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for GitHub Pages to publish the new version
+        run: sleep 120
+
+      - name: Send the sitemap's pages to IndexNow
+        run: |
+          URLS=$(curl -fsSL https://gwendolen.com.au/sitemap.xml | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
+          jq -n --argjson urls "$URLS" \
+            '{host: "gwendolen.com.au", key: "ea3c6a8f7d833cca3e3a3c3d47f810bf", keyLocation: "https://gwendolen.com.au/ea3c6a8f7d833cca3e3a3c3d47f810bf.txt", urlList: $urls}' > body.json
+          cat body.json
+          CODE=$(curl -sS -o resp.txt -w '%{http_code}' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data @body.json)
+          echo "IndexNow responded: $CODE"; cat resp.txt
+          case "$CODE" in 200|202) ;; *) exit 1 ;; esac
