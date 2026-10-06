@@ -33,7 +33,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
-<link rel="stylesheet" href="assets/css/site.css?v=20261006c">
+<link rel="stylesheet" href="assets/css/site.css?v=20261006d">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -149,7 +149,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </ul>
       </div>
 
-      <form class="form" id="enquiry" novalidate>
+      <form class="form" id="enquiry" novalidate data-endpoint="https://gwendolen-enquiry.2bzbk74ry7.workers.dev" data-fallback-email="sales@gwendolen.com.au">
         <h2 class="h3">Send an enquiry</h2>
         <div class="field-row">
           <div class="field">
@@ -174,6 +174,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
         <div class="field">
+          <label for="organisation">Organisation <span class="hint">(optional)</span></label>
+          <input id="organisation" name="organisation" type="text" autocomplete="organization">
+        </div>
+        <div class="field">
           <label for="type">Type of work</label>
           <select id="type" name="type">
             <option value="">Choose one</option>
@@ -188,8 +192,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <textarea id="message" name="message" required></textarea>
           <span class="err">Please add a short message.</span>
         </div>
+        <div class="hp" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
         <button class="btn btn--primary" type="submit">Send Enquiry</button>
-        <p class="form-note">This opens your email app with your message ready to send to me@gwendolen.com.au. See my <a href="privacy.html">privacy statement</a>.</p>
+        <p class="form-status" role="status" aria-live="polite"></p>
+        <p class="form-note">Your details go to me and into my customer records, so I can reply and quote. See my <a href="privacy.html">privacy statement</a>.</p>
       </form>
     </div>
   </section>

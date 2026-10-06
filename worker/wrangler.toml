@@ -1,0 +1,13 @@
+name = "gwendolen-enquiry"
+main = "gwendolen-enquiry.js"
+compatibility_date = "2024-09-23"
+
+# Secrets — set in the Cloudflare dashboard (Worker → Settings → Variables and Secrets)
+# or with:  npx wrangler secret put SQUARE_ACCESS_TOKEN
+#           npx wrangler secret put RESEND_API_KEY
+
+# Rate limiting: max 3 enquiries per 60 seconds per visitor IP.
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+simple = { limit = 3, period = 60 }

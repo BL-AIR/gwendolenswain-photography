@@ -377,3 +377,12 @@ body.lb-lock { overflow: hidden; }
 .ig-only .ig-icon { width: 24px; height: 24px; margin: 0; vertical-align: 0; }
 .site-footer .ig-only { width: 36px; height: 36px; margin-left: -6px; color: var(--buttercream); }
 .site-footer .ig-only:hover { color: var(--ochre); }
+
+/* ---------- Enquiry form status ---------- */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-status { font: var(--type-body-sm); margin: var(--space-4) 0 0; }
+.form-status:empty { display: none; }
+.form-status--ok { color: var(--heading); }
+.form-status--error { color: var(--error); }
+.form-status a { color: inherit; }
+.btn[disabled] { opacity: 0.6; cursor: default; }

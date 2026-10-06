@@ -1,6 +1,6 @@
 /* Gwendolen Swain Photography — small site scripts.
    1. Lightbox for any .gallery a.tile (links to the full-size image).
-   2. Enquiry form: composes an email in the visitor's mail app (no server needed). */
+   2. Enquiry form: posts to the gwendolen-enquiry worker, with an email fallback. */
 (function () {
   'use strict';
 
@@ -67,9 +67,40 @@
     });
   }
 
-  /* ---------- Enquiry form ---------- */
+  /* ---------- Enquiry form ----------
+     Sends to the gwendolen-enquiry worker (Square customer + email to sales@).
+     If that fails for any reason, falls back to the visitor's own email app,
+     so an enquiry is never lost. */
   var form = document.getElementById('enquiry');
   if (form) {
+    var started = Date.now();
+    var status = form.querySelector('.form-status');
+    var button = form.querySelector('button[type="submit"]');
+    var endpoint = form.getAttribute('data-endpoint');
+    var fallbackEmail = form.getAttribute('data-fallback-email') || 'sales@gwendolen.com.au';
+    var v = function (n) { return (form.elements[n] && form.elements[n].value.trim()) || ''; };
+
+    var mailtoHref = function () {
+      var subject = 'Enquiry' + (v('type') ? ' — ' + v('type') : '') + ' — ' + v('name');
+      var lines = [v('message'), '', '—', 'Name: ' + v('name'), 'Email: ' + v('email'),
+        v('phone') ? 'Phone: ' + v('phone') : '', v('organisation') ? 'Organisation: ' + v('organisation') : '',
+        v('type') ? 'Type of work: ' + v('type') : '', v('date') ? 'Date: ' + v('date') : '']
+        .filter(function (l, i) { return l !== '' || i === 1; });
+      return 'mailto:' + fallbackEmail + '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(lines.join('\n'));
+    };
+    var say = function (html, kind) {
+      status.innerHTML = html;
+      status.className = 'form-status' + (kind ? ' form-status--' + kind : '');
+    };
+    var fallback = function () {
+      say('Sorry — that didn’t go through. Please <a href="' + mailtoHref() +
+        '">send it by email instead</a>, or write to <a href="mailto:' + fallbackEmail + '">' +
+        fallbackEmail + '</a>.', 'error');
+      button.disabled = false;
+      button.textContent = 'Send Enquiry';
+    };
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var ok = true;
@@ -82,20 +113,33 @@
       });
       if (!ok) return;
 
-      var v = function (n) { return (form.elements[n] && form.elements[n].value.trim()) || ''; };
-      var subject = 'Enquiry' + (v('type') ? ' — ' + v('type') : '') + ' — ' + v('name');
-      var lines = [
-        v('message'),
-        '',
-        '—',
-        'Name: ' + v('name'),
-        'Email: ' + v('email'),
-        v('phone') ? 'Phone: ' + v('phone') : '',
-        v('type') ? 'Type of work: ' + v('type') : '',
-        v('date') ? 'Date: ' + v('date') : ''
-      ].filter(function (l, i) { return l !== '' || i === 1; });
-      window.location.href = 'mailto:me@gwendolen.com.au?subject=' +
-        encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+      if (!endpoint || !window.fetch) { window.location.href = mailtoHref(); return; }
+
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      say('');
+      var payload = {
+        name: v('name'), email: v('email'), phone: v('phone'), organisation: v('organisation'),
+        type: v('type'), date: v('date'), message: v('message'),
+        website: form.elements.website ? form.elements.website.value : '', started: started
+      };
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (res.ok && data.ok) {
+            form.reset();
+            form.classList.add('form--sent');
+            button.textContent = 'Sent';
+            say('<strong>Thank you — your enquiry is on its way.</strong> I’ll be in touch soon.', 'ok');
+            if (window.dataLayer) window.dataLayer.push({ event: 'generate_lead', form: 'enquiry', enquiry_type: payload.type || 'unspecified' });
+          } else {
+            fallback();
+          }
+        });
+      }).catch(fallback);
     });
   }
 
