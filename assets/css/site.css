@@ -363,3 +363,12 @@ body.lb-lock { overflow: hidden; }
   .split-text { padding: var(--space-9) var(--gutter-mobile) var(--space-6); }
   .split-photo { height: 460px; }
 }
+
+/* ---------- Instagram glyph ----------
+   Meta's official glyph (assets/img/social/instagram-glyph.svg), used unaltered
+   as a mask so it takes the text colour: Fern, Charcoal or Buttercream. */
+.ig-icon { display: inline-block; width: 1.05em; height: 1.05em; margin-right: 0.45em; vertical-align: -0.17em;
+           background: currentColor;
+           -webkit-mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat;
+                   mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat; }
+.btn-row .ig-link { margin-left: var(--space-3); }
