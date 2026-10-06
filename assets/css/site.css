@@ -327,3 +327,10 @@ body.lb-lock { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- Prose pages (privacy) ---------- */
+.prose h2 { margin-top: var(--space-8); }
+.prose h3 { margin-top: var(--space-6); }
+.prose ul { padding-left: 1.2em; margin: 0 0 var(--space-4); }
+.prose li { margin-bottom: var(--space-2); }
+.prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; background: var(--bg-card); border: 1px solid var(--rule); padding: 1px 5px; }
