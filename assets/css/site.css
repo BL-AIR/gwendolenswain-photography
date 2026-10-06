@@ -336,14 +336,21 @@ body.lb-lock { overflow: hidden; }
 .prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; background: var(--bg-card); border: 1px solid var(--rule); padding: 1px 5px; }
 
 /* ---------- Headshot (transparent cut-out) ----------
-   The portrait is cropped at the torso, so it sits on the bottom edge of its
-   section (negative margin = section padding) instead of floating mid-section. */
-.headshot { margin: 0 0 calc(-1 * var(--space-10)); align-self: end; }
-.headshot img { width: 100%; max-width: 440px; height: auto; margin: 0 auto; }
+   Sits to the right so she faces the text, on a Fern panel in both themes.
+   The panel matches the text column top to bottom (min-height keeps it
+   generous when the text is short); the photo fills it, anchored at the top
+   of her hair. A soft vignette darkens the left, right and bottom edges. */
+.split:has(.headshot) { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); align-items: stretch; gap: var(--space-8); }
+.split:has(.headshot) > :not(.headshot) { align-self: center; }
+.headshot { order: 2; margin: 0; position: relative; overflow: hidden; min-height: 500px;
+            background: var(--fern); border: 1px solid var(--headshot-rule, transparent); }
+.headshot img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none;
+                object-fit: cover; object-position: 50% 0; }
+.headshot::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 85% 105% at 50% 18%, rgba(27, 38, 32, 0) 55%, rgba(27, 38, 32, 0.6) 100%); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --headshot-rule: var(--rule); } }
+:root[data-theme="dark"] { --headshot-rule: var(--rule); }
 @media (max-width: 960px) {
-  .headshot { order: 2; }
-  .headshot img { max-width: 340px; }
-}
-@media (max-width: 720px) {
-  .headshot { margin-bottom: calc(-1 * var(--space-9)); }
+  .split:has(.headshot) { grid-template-columns: 1fr; gap: var(--space-7); }
+  .headshot { min-height: 0; aspect-ratio: 4 / 5; width: 100%; max-width: 420px; }
 }
