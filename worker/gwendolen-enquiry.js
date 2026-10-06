@@ -6,7 +6,8 @@
  *      or creates them (name, email, phone, organisation);
  *   2. adds a dated note to that customer with the enquiry details;
  *   3. emails the enquiry to sales@gwendolen.com.au (reply-to = the client);
- *   4. answers the browser with { ok: true }.
+ *   4. sends the enquirer a short, fixed-wording acknowledgement;
+ *   5. answers the browser with { ok: true }.
  *
  * The email is the safety net: if Square is unavailable the enquiry still
  * arrives, and the email says the Square step needs doing by hand.
@@ -29,7 +30,7 @@ const LIMITS = { name: 120, email: 254, phone: 30, organisation: 200, type: 60, 
 const TYPES = ['Event', 'Portrait', 'Artwork or exhibition documentation', 'Something else', ''];
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get('Origin') || '';
     const cors = corsHeaders(origin);
 
@@ -70,6 +71,10 @@ export default {
       console.log('email failed', err && err.message);
       return json({ ok: false, error: 'email' }, 502, cors);
     }
+
+    // 4. Acknowledge the enquirer. Best effort: a failure here never affects the enquiry.
+    const ack = sendAcknowledgement(env, e).catch(err => console.log('ack failed', err && err.message));
+    if (ctx && ctx.waitUntil) ctx.waitUntil(ack); else await ack;
 
     return json({ ok: true }, 200, cors);
   },
@@ -201,6 +206,54 @@ async function sendEmail(env, e, square) {
     }),
   });
   if (!res.ok) throw new Error('Resend ' + res.status + ' ' + (await res.text()).slice(0, 300));
+}
+
+/* ---------------- Acknowledgement to the enquirer ----------------
+   Deliberately fixed wording: it never repeats the visitor's message, so the
+   form can't be used to send arbitrary content to arbitrary addresses. */
+
+async function sendAcknowledgement(env, e) {
+  const first = (e.name.split(' ')[0] || '').replace(/[^\p{L}\p{M}'\-]/gu, '').slice(0, 30);
+  const hi = first ? `Hi ${first},` : 'Hi,';
+  const dateLine = e.date
+    ? `You mentioned ${formatDate(e.date)}, so I'll check my availability and let you know in my reply.`
+    : '';
+
+  const text = [
+    hi, '',
+    "Thanks for getting in touch. Your enquiry has reached me, and I'll reply as soon as I can, usually within two business days.",
+    ...(dateLine ? ['', dateLine] : []), '',
+    'In the meantime, you can see more of my work at https://gwendolen.com.au/work.html or on Instagram @gswain_photography.', '',
+    'Gwendolen', '',
+    '—', 'Gwendolen Swain Photography', 'https://gwendolen.com.au', '',
+    'This is an automatic reply. To add anything to your enquiry, just reply to this email.',
+  ].join('\n');
+
+  const p = 'margin:0 0 16px';
+  const html = `<div style="background:#F6F0DC;padding:32px 16px">
+<div style="max-width:560px;margin:0 auto;background:#ffffff;border-top:4px solid #2F5A3F;padding:32px 28px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.55;color:#1B2620">
+<p style="${p}">${esc(hi)}</p>
+<p style="${p}">Thanks for getting in touch. Your enquiry has reached me, and I'll reply as soon as I can, usually within two business days.</p>
+${dateLine ? `<p style="${p}">${esc(dateLine)}</p>` : ''}
+<p style="${p}">In the meantime, you can see more of my work on <a href="https://gwendolen.com.au/work.html" style="color:#2F5A3F">my website</a> or on Instagram <a href="https://www.instagram.com/gswain_photography/" style="color:#2F5A3F">@gswain_photography</a>.</p>
+<p style="margin:0 0 28px">Gwendolen</p>
+<p style="margin:0;padding-top:16px;border-top:1px solid #BFD0B4;font-family:Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#2F5A3F">Gwendolen Swain Photography · <a href="https://gwendolen.com.au" style="color:#2F5A3F;text-decoration:none">gwendolen.com.au</a></p>
+</div>
+<p style="max-width:560px;margin:12px auto 0;font-family:Helvetica,Arial,sans-serif;font-size:12px;color:#5C6455;text-align:center">This is an automatic reply. To add anything to your enquiry, just reply to this email.</p>
+</div>`;
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: 'Gwendolen Swain Photography <sales@gwendolen.com.au>',
+      to: [e.email],
+      reply_to: NOTIFY_TO,
+      subject: 'Thanks for your enquiry, Gwendolen Swain Photography',
+      text, html,
+    }),
+  });
+  if (!res.ok) throw new Error('Resend ack ' + res.status + ' ' + (await res.text()).slice(0, 300));
 }
 
 /* ---------------- Helpers ---------------- */
