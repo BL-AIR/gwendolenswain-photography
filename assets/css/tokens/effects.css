@@ -1,0 +1,11 @@
+:root {
+  --radius: 0;            /* square corners everywhere */
+  --radius-lens: 50%;     /* the lens monogram is the only round shape */
+  --border-width: 1px;
+  --shadow: none;         /* no UI shadows — photographs carry the depth */
+  --photo-hover-opacity: 0.88; /* @kind other */
+  --ease: ease; /* @kind other */
+  --duration: 160ms; /* @kind other */
+  --focus-outline: 2px solid var(--focus-ring);
+  --focus-offset: 3px;
+}

@@ -1,0 +1,26 @@
+:root {
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', sans-serif;
+  --font-body: 'Newsreader', Georgia, serif;
+
+  --tracking-wordmark: -0.03em;
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.025em;
+  --tracking-ui: 0;
+  --tracking-eyebrow: 0.12em;
+
+  /* Display & headings — Bricolage */
+  --type-display: 700 64px/0.92 var(--font-display);
+  --type-h1: 500 44px/1.05 var(--font-display);
+  --type-h2: 500 32px/1.1 var(--font-display);
+  --type-h3: 500 22px/1.2 var(--font-display);
+  /* Body — Newsreader */
+  --type-subhead: italic 400 22px/1.35 var(--font-body);
+  --type-body-lg: 400 20px/1.55 var(--font-body);
+  --type-body: 400 18px/1.6 var(--font-body);
+  --type-body-sm: 400 16px/1.55 var(--font-body);
+  /* UI — Bricolage */
+  --type-ui: 500 14px/1.4 var(--font-display);
+  --type-button: 500 15px/1 var(--font-display);
+  --type-caption: 500 12px/1.4 var(--font-display);
+  --type-eyebrow: 500 12px/1.2 var(--font-display);
+}

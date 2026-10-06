@@ -1,0 +1,38 @@
+:root {
+  /* Base palette — "Fern & Buttercream" */
+  --fern: #2F5A3F;
+  --fern-hover: #3A6B4C;
+  --fern-deep: #24482F;
+  --buttercream: #F6F0DC;
+  --buttercream-light: #FBF7EA;
+  --charcoal: #1B2620;
+  --ochre: #C9A04A;
+  --ochre-hover: #D4AF5E;
+  --lichen: #BFD0B4;
+  --hairline: #DDD3B6;
+  --muted: #5C6455;
+  --clay: #A8432F;
+
+  /* Semantic */
+  --surface-page: var(--buttercream);
+  --surface-card: var(--buttercream-light);
+  --surface-inverse: var(--fern);
+  --surface-ink: var(--charcoal);
+  --surface-tint: var(--lichen);
+  --text-body: var(--charcoal);
+  --text-heading: var(--fern);
+  --text-muted: var(--muted);
+  --text-inverse: var(--buttercream);
+  --text-link: var(--fern);
+  --text-link-hover: var(--charcoal);
+  --border-hairline: var(--hairline);
+  --border-strong: var(--fern);
+  --action-primary: var(--ochre);
+  --action-primary-hover: var(--ochre-hover);
+  --action-primary-text: var(--charcoal);
+  --action-secondary: var(--fern);
+  --action-secondary-hover: var(--fern-hover);
+  --action-secondary-text: var(--buttercream);
+  --status-error: var(--clay);
+  --focus-ring: var(--ochre);
+}

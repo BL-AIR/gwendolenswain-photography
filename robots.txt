@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gwendolen.com.au/sitemap.xml
