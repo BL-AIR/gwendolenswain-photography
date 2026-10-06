@@ -115,7 +115,8 @@ function release_(p, inv, token) {
 
 function clientHtml_(hi, link, closes) {
   const p = 'margin:0 0 16px';
-  return '<div style="background:#F6F0DC;padding:32px 16px">' +
+  return '<!doctype html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light"><style>:root{color-scheme:light only}</style></head><body style="margin:0;background:#F6F0DC">' +
+    '<div style="background:#F6F0DC;padding:32px 16px">' +
     '<div style="max-width:560px;margin:0 auto;background:#ffffff;border-top:4px solid #2F5A3F;padding:32px 28px;font-family:Georgia,\'Times New Roman\',serif;font-size:17px;line-height:1.55;color:#1B2620">' +
     '<p style="' + p + '">' + esc_(hi) + '</p>' +
     '<p style="' + p + '">Thank you for your payment. Your photographs are ready to view and download.</p>' +
@@ -125,7 +126,7 @@ function clientHtml_(hi, link, closes) {
     '<p style="' + p + '">It was a pleasure working with you.</p>' +
     '<p style="margin:0 0 28px">Gwendolen</p>' +
     '<p style="margin:0;padding-top:16px;border-top:1px solid #BFD0B4;font-family:Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#2F5A3F">Gwendolen Swain Photography · <a href="https://gwendolen.com.au" style="color:#2F5A3F;text-decoration:none">gwendolen.com.au</a></p>' +
-    '</div></div>';
+    '</div></div></body></html>';
 }
 
 /* ---------- Nightly: 60-day close, warnings, 12-month reminder ---------- */

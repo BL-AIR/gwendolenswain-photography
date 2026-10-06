@@ -230,7 +230,7 @@ async function sendAcknowledgement(env, e) {
   ].join('\n');
 
   const p = 'margin:0 0 16px';
-  const html = `<div style="background:#F6F0DC;padding:32px 16px">
+  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light"><style>:root{color-scheme:light only}</style></head><body style="margin:0;background:#F6F0DC"><div style="background:#F6F0DC;padding:32px 16px">
 <div style="max-width:560px;margin:0 auto;background:#ffffff;border-top:4px solid #2F5A3F;padding:32px 28px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.55;color:#1B2620">
 <p style="${p}">${esc(hi)}</p>
 <p style="${p}">Thanks for getting in touch. Your enquiry has reached me, and I'll reply as soon as I can, usually within two business days.</p>
@@ -240,7 +240,7 @@ ${dateLine ? `<p style="${p}">${esc(dateLine)}</p>` : ''}
 <p style="margin:0;padding-top:16px;border-top:1px solid #BFD0B4;font-family:Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#2F5A3F">Gwendolen Swain Photography · <a href="https://gwendolen.com.au" style="color:#2F5A3F;text-decoration:none">gwendolen.com.au</a></p>
 </div>
 <p style="max-width:560px;margin:12px auto 0;font-family:Helvetica,Arial,sans-serif;font-size:12px;color:#5C6455;text-align:center">This is an automatic reply. To add anything to your enquiry, just reply to this email.</p>
-</div>`;
+</div></body></html>`;
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
