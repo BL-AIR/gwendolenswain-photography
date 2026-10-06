@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+._*
+
+# Original / master image files — keep these out of the public repo.
+# Only web-ready JPG/PNG/WebP exports belong in images/.
+*.tif
+*.tiff
+*.psd
+*.heic
+*.dng
+*.cr2
+*.cr3
+*.nef
+*.arw
