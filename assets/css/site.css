@@ -186,7 +186,7 @@ h3, .h3 { font: var(--type-h3); letter-spacing: var(--tracking-heading); color: 
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
                      padding-top: var(--space-5); padding-bottom: var(--space-5); }
 .brand { display: block; flex: none; }
-.brand img { width: 200px; height: auto; }
+.brand img { width: 260px; height: auto; }
 .nav { display: flex; align-items: center; gap: var(--space-6); }
 .nav a { font: var(--type-ui); font-size: 15px; color: var(--ink); text-decoration: none; }
 .nav a:hover { color: var(--heading); text-decoration: underline; }
@@ -312,7 +312,7 @@ body.lb-lock { overflow: hidden; }
 @media (max-width: 720px) {
   .wrap { padding: 0 var(--gutter-mobile); }
   .site-header .wrap { flex-direction: column; align-items: flex-start; gap: var(--space-4); padding-top: var(--space-4); padding-bottom: var(--space-4); }
-  .brand img { width: 170px; }
+  .brand img { width: 220px; }
   .nav { gap: var(--space-5); width: 100%; }
   .nav .btn { margin-left: auto; padding: 10px 14px; }
   .section { padding: var(--space-9) 0; }
@@ -323,6 +323,19 @@ body.lb-lock { overflow: hidden; }
   .form { padding: var(--space-5); }
   .lb-stage { padding: 0 var(--space-2); }
   .lb-prev, .lb-next { top: auto; bottom: var(--space-3); transform: none; }
+}
+/* ---------- Standard contracts ---------- */
+.contracts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); margin-top: var(--space-7); }
+.contract { display: flex; flex-direction: column; }
+.contract h2 { margin: 0 0 var(--space-2); }
+.contract-desc { margin: 0 0 var(--space-4); color: var(--muted-ink); min-height: 3em; }
+.contract .pdf { width: 100%; height: 78vh; min-height: 520px; border: 1px solid var(--rule); background: #fff; display: block; }
+.pdf-fallback { padding: var(--space-5); }
+.contract-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); margin: var(--space-4) 0 0; }
+.contract-note { margin-top: var(--space-7); }
+@media (max-width: 900px) {
+  .contracts { grid-template-columns: 1fr; }
+  .contract .pdf { height: 70vh; min-height: 420px; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
