@@ -371,4 +371,9 @@ body.lb-lock { overflow: hidden; }
            background: currentColor;
            -webkit-mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat;
                    mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat; }
-.btn-row .ig-link { margin-left: var(--space-3); }
+.btn-row .ig-link { margin-left: var(--space-2); }
+.ig-only { display: inline-grid; place-items: center; width: 44px; height: 44px; color: var(--link); text-decoration: none; }
+.ig-only:hover { color: var(--ochre); }
+.ig-only .ig-icon { width: 24px; height: 24px; margin: 0; vertical-align: 0; }
+.site-footer .ig-only { width: 36px; height: 36px; margin-left: -6px; color: var(--buttercream); }
+.site-footer .ig-only:hover { color: var(--ochre); }
