@@ -335,22 +335,31 @@ body.lb-lock { overflow: hidden; }
 .prose li { margin-bottom: var(--space-2); }
 .prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; background: var(--bg-card); border: 1px solid var(--rule); padding: 1px 5px; }
 
-/* ---------- Headshot (transparent cut-out) ----------
-   Sits to the right so she faces the text, on a Fern panel in both themes.
-   The panel matches the text column top to bottom (min-height keeps it
-   generous when the text is short); the photo fills it, anchored at the top
-   of her hair. A soft vignette darkens the left, right and bottom edges. */
-.split:has(.headshot) { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); align-items: stretch; gap: var(--space-8); }
-.split:has(.headshot) > :not(.headshot) { align-self: center; }
-.headshot { order: 2; margin: 0; position: relative; overflow: hidden; min-height: 500px;
-            background: var(--fern); border: 1px solid var(--headshot-rule, transparent); }
-.headshot img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none;
-                object-fit: cover; object-position: 50% 0; }
-.headshot::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 85% 105% at 50% 18%, rgba(27, 38, 32, 0) 55%, rgba(27, 38, 32, 0.6) 100%); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --headshot-rule: var(--rule); } }
-:root[data-theme="dark"] { --headshot-rule: var(--rule); }
+/* ---------- Split section: text left, portrait right ----------
+   Full-width two halves. The text half keeps the section's own ground; the
+   photo half is solid Fern edge to edge. In dark mode the page is already
+   green, so the photo half takes the same ground and the portrait blends in.
+   The portrait is a transparent cut-out whose shoulders and base fade out
+   (baked into the image); it spans the text block from top to bottom. */
+.split-section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.split-section--card { background: var(--bg-card); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.split-text { display: flex; align-items: center;
+              padding: var(--space-10) var(--space-8) var(--space-10) max(var(--gutter), calc((100vw - var(--content-max)) / 2)); }
+.split-text-inner { min-height: 460px; display: flex; flex-direction: column; justify-content: center; }
+.split-photo { position: relative; background: var(--photo-panel, var(--fern)); min-height: 100%; }
+.split-photo img { position: absolute; left: var(--space-6); right: var(--space-6); top: var(--space-10); bottom: var(--space-10);
+                   width: calc(100% - 2 * var(--space-6)); height: calc(100% - 2 * var(--space-10)); max-width: none;
+                   object-fit: contain; object-position: 50% 100%; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --photo-panel: transparent; } }
+:root[data-theme="dark"] { --photo-panel: transparent; }
 @media (max-width: 960px) {
-  .split:has(.headshot) { grid-template-columns: 1fr; gap: var(--space-7); }
-  .headshot { min-height: 0; aspect-ratio: 4 / 5; width: 100%; max-width: 420px; }
+  .split-section { grid-template-columns: 1fr; }
+  .split-text { padding: var(--space-9) var(--gutter) var(--space-7); }
+  .split-text-inner { min-height: 0; }
+  .split-photo { min-height: 0; height: 520px; }
+  .split-photo img { top: var(--space-7); bottom: 0; height: calc(100% - var(--space-7)); }
+}
+@media (max-width: 720px) {
+  .split-text { padding: var(--space-9) var(--gutter-mobile) var(--space-6); }
+  .split-photo { height: 460px; }
 }
