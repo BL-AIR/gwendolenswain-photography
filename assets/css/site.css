@@ -149,15 +149,17 @@ p { margin: 0 0 var(--space-4); }
 .section--fern { background: var(--band-bg); color: var(--band-ink); }
 .section--card { background: var(--bg-card); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
 /* Dark mode, home page: the hero ("People and places") and the services section sit on
-   Fern-deep, Selected Work on Charcoal. Light mode is unchanged. */
+   Fern-deep; Selected Work and the About split sit on Charcoal. Light mode is unchanged. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .hero,
   :root:not([data-theme="light"]) .section--services { background: var(--fern-deep); }
-  :root:not([data-theme="light"]) .section--portfolio { background: var(--charcoal); }
+  :root:not([data-theme="light"]) .section--portfolio,
+  :root:not([data-theme="light"]) .split-section--card { background: var(--charcoal); }
 }
 :root[data-theme="dark"] .hero,
 :root[data-theme="dark"] .section--services { background: var(--fern-deep); }
-:root[data-theme="dark"] .section--portfolio { background: var(--charcoal); }
+:root[data-theme="dark"] .section--portfolio,
+:root[data-theme="dark"] .split-section--card { background: var(--charcoal); }
 
 /* ---------- Type ---------- */
 .eyebrow { font: var(--type-eyebrow); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
