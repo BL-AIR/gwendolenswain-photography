@@ -377,7 +377,7 @@ body.lb-lock { overflow: hidden; }
 
 /* ---------- Split section: text left, portrait right ----------
    Full-width two halves. The text half keeps the section's own ground; the
-   photo half is solid Fern edge to edge. In dark mode the photo half takes the
+   photo half is solid White edge to edge in light mode. In dark mode the photo half takes the
    page ground and the portrait blends in.
    The portrait is a transparent cut-out whose shoulders and base fade out
    (baked into the image); it spans the text block from top to bottom. */
@@ -386,7 +386,7 @@ body.lb-lock { overflow: hidden; }
 .split-text { display: flex; align-items: center;
               padding: var(--space-10) var(--space-8) var(--space-10) max(var(--gutter), calc((100vw - var(--content-max)) / 2)); }
 .split-text-inner { min-height: 460px; display: flex; flex-direction: column; justify-content: center; }
-.split-photo { position: relative; background: var(--photo-panel, var(--fern)); min-height: 100%; }
+.split-photo { position: relative; background: var(--photo-panel, #FFFFFF); min-height: 100%; }
 .split-photo img { position: absolute; left: var(--space-6); right: var(--space-6); top: var(--space-10); bottom: var(--space-10);
                    width: calc(100% - 2 * var(--space-6)); height: calc(100% - 2 * var(--space-10)); max-width: none;
                    object-fit: contain; object-position: 50% 100%; }
