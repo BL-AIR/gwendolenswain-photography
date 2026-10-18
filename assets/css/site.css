@@ -38,6 +38,10 @@
   --field-border-focus: var(--fern);
   --error: var(--clay);
   --footer-bg: var(--fern-deep);
+  --cta-bg: var(--buttercream);
+  --cta-ink: var(--charcoal);
+  --cta-heading: var(--charcoal);
+  --cta-rule: var(--hairline);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -67,6 +71,10 @@
     --field-border-focus: var(--ochre);
     --error: #E9A291;
     --footer-bg: var(--charcoal);
+    --cta-bg: var(--buttercream);
+    --cta-ink: var(--charcoal);
+    --cta-heading: var(--fern);
+    --cta-rule: transparent;
   }
 }
 :root[data-theme="dark"] {
@@ -96,6 +104,10 @@
   --field-border-focus: var(--ochre);
   --error: #E9A291;
   --footer-bg: var(--charcoal);
+  --cta-bg: var(--buttercream);
+  --cta-ink: var(--charcoal);
+  --cta-heading: var(--fern);
+  --cta-rule: transparent;
 }
 
 /* Logo swaps: the Fern lockup on light grounds, the reversed lockup on dark. */
@@ -280,6 +292,9 @@ h3, .h3 { font: var(--type-h3); letter-spacing: var(--tracking-heading); color: 
 
 /* ---------- CTA band ---------- */
 .cta { text-align: left; }
+.section--fern.cta { background: var(--cta-bg); color: var(--cta-ink);
+                     border-top: 1px solid var(--cta-rule); border-bottom: 1px solid var(--cta-rule); }
+.section--fern.cta h2 { color: var(--cta-heading); }
 .cta .wrap { display: flex; justify-content: space-between; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
 .cta h2 { margin: 0; max-width: 18ch; }
 
