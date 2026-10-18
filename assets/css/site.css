@@ -148,6 +148,14 @@ p { margin: 0 0 var(--space-4); }
 .section--tight { padding: var(--space-9) 0; }
 .section--fern { background: var(--band-bg); color: var(--band-ink); }
 .section--card { background: var(--bg-card); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+/* Dark mode, home page: the hero ("People and places") sits on Fern, the Selected Work
+   section on Charcoal. Light mode is unchanged. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero { background: var(--fern); }
+  :root:not([data-theme="light"]) .section--portfolio { background: var(--charcoal); }
+}
+:root[data-theme="dark"] .hero { background: var(--fern); }
+:root[data-theme="dark"] .section--portfolio { background: var(--charcoal); }
 
 /* ---------- Type ---------- */
 .eyebrow { font: var(--type-eyebrow); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
