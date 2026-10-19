@@ -411,12 +411,17 @@ body.lb-lock { overflow: hidden; }
            background: currentColor;
            -webkit-mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat;
                    mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat; }
+.yt-icon { display: inline-block; width: 1.05em; height: 1.05em; margin-right: 0.45em; vertical-align: -0.17em;
+           background: currentColor;
+           -webkit-mask: url('../img/social/youtube-glyph.svg') center / contain no-repeat;
+                   mask: url('../img/social/youtube-glyph.svg') center / contain no-repeat; }
 .social-row { margin: var(--space-5) 0 0 -10px; }
 .ig-only { display: inline-grid; place-items: center; width: 44px; height: 44px; color: var(--link); text-decoration: none; }
 .ig-only:hover { color: var(--ochre); }
-.ig-only .ig-icon { width: 24px; height: 24px; margin: 0; vertical-align: 0; }
+.ig-only .ig-icon, .ig-only .yt-icon { width: 24px; height: 24px; margin: 0; vertical-align: 0; }
 .site-footer .ig-only { width: 36px; height: 36px; margin-left: -6px; color: var(--buttercream); }
 .site-footer .ig-only:hover { color: var(--ochre); }
+.site-footer .ig-only + .ig-only { margin-left: 0; }
 
 /* ---------- Enquiry form status ---------- */
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
