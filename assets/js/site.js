@@ -166,6 +166,32 @@
     });
   }
 
+  /* ---------- Video: muted autoplay when scrolled into view ----------
+     Browsers only allow autoplay without sound, so it starts muted (the player has an unmute
+     button). With reduced motion, or no IntersectionObserver, the poster links to YouTube instead.
+     Nothing is requested from YouTube until the video is on screen. */
+  var frames = document.querySelectorAll('.video-frame[data-yt]');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (frames.length && 'IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var f = e.target; io.unobserve(f);
+        var id = f.getAttribute('data-yt');
+        var ifr = document.createElement('iframe');
+        ifr.src = 'https://www.youtube-nocookie.com/embed/' + id +
+          '?autoplay=1&mute=1&loop=1&playlist=' + id + '&playsinline=1&rel=0&modestbranding=1';
+        ifr.title = f.getAttribute('data-title') || 'Video';
+        ifr.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        ifr.setAttribute('allowfullscreen', '');
+        ifr.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        ifr.setAttribute('loading', 'lazy');
+        f.appendChild(ifr);
+      });
+    }, { threshold: 0.5 });
+    frames.forEach(function (f) { io.observe(f); });
+  }
+
   /* ---------- Footer year ---------- */
   var y = document.querySelector('[data-year]');
   if (y) y.textContent = new Date().getFullYear();

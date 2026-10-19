@@ -411,17 +411,38 @@ body.lb-lock { overflow: hidden; }
            background: currentColor;
            -webkit-mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat;
                    mask: url('../img/social/instagram-glyph.svg') center / contain no-repeat; }
-.yt-icon { display: inline-block; width: 1.05em; height: 1.05em; margin-right: 0.45em; vertical-align: -0.17em;
-           background: currentColor;
-           -webkit-mask: url('../img/social/youtube-glyph.svg') center / contain no-repeat;
-                   mask: url('../img/social/youtube-glyph.svg') center / contain no-repeat; }
+/* YouTube's official icon, supplied by YouTube and used unaltered (assets/img/social/youtube-icon-*.svg,
+   converted from their .ai files). Red on light backgrounds, white on dark ones. The artwork carries
+   its own clear space, so the box is larger than the visible glyph. */
+.yt-icon { display: inline-block; width: 1.6em; height: 1.37em; margin: 0 0.1em 0 -0.3em; vertical-align: -0.3em;
+           background: url('../img/social/youtube-icon-red.svg') center / contain no-repeat; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .yt-icon { background-image: url('../img/social/youtube-icon-white.svg'); } }
+:root[data-theme="dark"] .yt-icon { background-image: url('../img/social/youtube-icon-white.svg'); }
+.site-footer .yt-icon { background-image: url('../img/social/youtube-icon-white.svg'); }
 .social-row { margin: var(--space-5) 0 0 -10px; }
 .ig-only { display: inline-grid; place-items: center; width: 44px; height: 44px; color: var(--link); text-decoration: none; }
 .ig-only:hover { color: var(--ochre); }
-.ig-only .ig-icon, .ig-only .yt-icon { width: 24px; height: 24px; margin: 0; vertical-align: 0; }
+.ig-only .ig-icon { width: 24px; height: 24px; margin: 0; vertical-align: 0; }
+.ig-only .yt-icon { width: 40px; height: 34px; margin: 0; vertical-align: 0; }
 .site-footer .ig-only { width: 36px; height: 36px; margin-left: -6px; color: var(--buttercream); }
 .site-footer .ig-only:hover { color: var(--ochre); }
 .site-footer .ig-only + .ig-only { margin-left: 0; }
+.site-footer .ig-only .yt-icon { width: 36px; height: 31px; }
+
+/* ---------- Video (YouTube, no-cookie) ----------
+   Autoplays muted when scrolled into view (see site.js); falls back to a poster link. */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+           clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.video { margin: 0 0 var(--space-7); }
+.video-frame { position: relative; aspect-ratio: 16 / 9; background: var(--charcoal); overflow: hidden; }
+.video-frame iframe, .video-frame .video-fallback, .video-frame .video-fallback img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-frame .video-fallback img { object-fit: cover; }
+.video-play { position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; transform: translate(-50%, -50%);
+              background: var(--buttercream); transition: background var(--duration) var(--ease); }
+.video-play::after { content: ""; position: absolute; left: 30px; top: 22px; width: 24px; height: 28px; background: var(--charcoal);
+                     clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.video-fallback:hover .video-play { background: var(--ochre); }
+.video-caption { font: var(--type-caption); color: var(--muted-ink); margin: var(--space-2) 0 0; }
 
 /* ---------- Enquiry form status ---------- */
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

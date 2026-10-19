@@ -13,3 +13,6 @@
 *.cr3
 *.nef
 *.arw
+
+# YouTube brand-asset download (.ai/.eps/.pdf) — only the converted SVGs in assets/img/social/ are used by the site.
+assets/img/social/YouTube_Icon/
